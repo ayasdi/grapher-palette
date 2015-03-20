@@ -1,0 +1,9 @@
+{
+  "name": "grapher-palette",
+  "repository": "ayasdi/grapher-palette",
+  "description": "Palette module for Grapher",
+  "version": "0.0.1",
+  "dependencies": {},
+  "scripts": ["palette.js"],
+  "license": "Apache 2.0"
+}
