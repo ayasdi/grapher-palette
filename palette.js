@@ -46,25 +46,6 @@
   g.getPalette = function (name) { return this.palettes[name]; };
 
   /**
-   * map
-   * -----
-   *
-   * Get a new array with values calculated from original array.
-   *
-   *     var arr = [1, 2, 3];
-   *     var newArr = u.map(arr, fn);
-   */
-  function map (arr, fn, ctx) {
-    fn = bind(fn, ctx);
-    var i = arr.length,
-        mapped = new Array(i);
-    while (--i > -1) {
-      mapped[i] = fn(arr[i], i);
-    }
-    return mapped;
-  }
-
-  /**
     * Grapher.setPalette
     * -------------------
     * 

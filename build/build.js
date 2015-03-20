@@ -1,2 +1,2 @@
-Grapher = require('ayasdi/grapher@v1');
+Grapher = require('ayasdi/grapher@af9c740');
 require('../palette.js');
