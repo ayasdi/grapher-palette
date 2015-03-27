@@ -5,7 +5,7 @@
   "version": "0.0.1",
   "license": "Apache 2.0",
   "scripts": {
-    "grapher.js": "duo build/build.js > build/grapher.js --no-cache",
+    "grapher.js": "duo build/build.js > build/grapher.js",
     "palette-min.js": "uglifyjs palette.js -o palette-min.js",
     "test": "npm run grapher.js && grunt jasmine"
   },
