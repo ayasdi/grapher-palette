@@ -83,19 +83,11 @@
    return require;
 })({
 1: [function(require, module, exports) {
-Grapher = require('ayasdi/grapher@af9c740');
+Grapher = require('ayasdi/grapher@87d4cf2');
 require('../palette.js');
 
-}, {"ayasdi/grapher@af9c740":2,"../palette.js":3}],
+}, {"ayasdi/grapher@87d4cf2":2,"../palette.js":3}],
 2: [function(require, module, exports) {
-;(function () {
-  Grapher = require('./modules/grapher.js');
-
-  if (module && module.exports) module.exports = Grapher;
-})();
-
-}, {"./modules/grapher.js":4}],
-4: [function(require, module, exports) {
 // Ayasdi Inc. Copyright 2014
 // Grapher.js may be freely distributed under the Apache 2.0 license
 
@@ -135,6 +127,8 @@ require('../palette.js');
     *
     */
   Grapher.prototype.initialize = function (o) {
+    if (!o) o = {};
+    
     // Extend default properties with options
     this.props = u.extend({
       color: 0x222222,
@@ -264,14 +258,13 @@ require('../palette.js');
     */
   Grapher.prototype.enter = function () {
     var data = this.data();
-
     if (this.links.length < data.links.length) {
-      var links = data.links.slice(this.links.length, data.links.length - this.links.length);
+      var links = data.links.slice(this.links.length, data.links.length);
       u.eachPop(links, u.bind(function () { this.links.push(new Link()); }, this));
     }
 
     if (this.nodes.length < data.nodes.length) {
-      var nodes = data.nodes.slice(this.nodes.length, data.nodes.length - this.nodes.length);
+      var nodes = data.nodes.slice(this.nodes.length, data.nodes.length);
       u.eachPop(nodes, u.bind(function () { this.nodes.push(new Node()); }, this));
     }
 
@@ -709,8 +702,8 @@ require('../palette.js');
   if (module && module.exports) module.exports = Grapher;
 })();
 
-}, {"./renderers/gl/renderer.js":5,"./renderers/canvas/renderer.js":6,"./helpers/color.js":7,"./helpers/link.js":8,"./helpers/node.js":9,"./helpers/utilities.js":10}],
-5: [function(require, module, exports) {
+}, {"./renderers/gl/renderer.js":4,"./renderers/canvas/renderer.js":5,"./helpers/color.js":6,"./helpers/link.js":7,"./helpers/node.js":8,"./helpers/utilities.js":9}],
+4: [function(require, module, exports) {
 ;(function () {
   var LinkVertexShaderSource = require('./shaders/link.vert'),
       LinkFragmentShaderSource = require('./shaders/link.frag'),
@@ -885,20 +878,20 @@ require('../palette.js');
   if (module && module.exports) module.exports = WebGLRenderer;
 })();
 
-}, {"./shaders/link.vert":11,"./shaders/link.frag":12,"./shaders/node.vert":13,"./shaders/node.frag":14,"../renderer.js":15}],
-11: [function(require, module, exports) {
+}, {"./shaders/link.vert":10,"./shaders/link.frag":11,"./shaders/node.vert":12,"./shaders/node.frag":13,"../renderer.js":14}],
+10: [function(require, module, exports) {
 module.exports = 'uniform vec2 u_resolution;\nattribute vec2 a_position;\nattribute float a_color;\nvarying vec4 color;\nvarying vec2 position;\nvarying vec2 resolution;\nvoid main() {\n  vec2 clipspace = a_position / u_resolution * 2.0 - 1.0;\n  gl_Position = vec4(clipspace * vec2(1, -1), 0, 1);\n  float c = a_color;\n  color.b = mod(c, 256.0); c = floor(c / 256.0);\n  color.g = mod(c, 256.0); c = floor(c / 256.0);\n  color.r = mod(c, 256.0); c = floor(c / 256.0); color /= 255.0;\n  color.a = 1.0;\n}\n';
 }, {}],
-12: [function(require, module, exports) {
+11: [function(require, module, exports) {
 module.exports = 'precision mediump float;\nvarying vec4 color;\nvoid main() {\n  gl_FragColor = color;\n}\n';
 }, {}],
-13: [function(require, module, exports) {
+12: [function(require, module, exports) {
 module.exports = 'uniform vec2 u_resolution;\nattribute vec2 a_position;\nattribute float a_color;\nattribute vec2 a_center;\nattribute float a_radius;\nvarying vec4 color;\nvarying vec2 center;\nvarying vec2 resolution;\nvarying float radius;\nvoid main() {\n  vec2 clipspace = a_position / u_resolution * 2.0 - 1.0;\n  gl_Position = vec4(clipspace * vec2(1, -1), 0, 1);\n  float c = a_color;\n  color.b = mod(c, 256.0); c = floor(c / 256.0);\n  color.g = mod(c, 256.0); c = floor(c / 256.0);\n  color.r = mod(c, 256.0); c = floor(c / 256.0); color /= 255.0;\n  color.a = 1.0;\n  radius = a_radius;\n  center = a_center;\n  resolution = u_resolution;\n}\n';
 }, {}],
-14: [function(require, module, exports) {
+13: [function(require, module, exports) {
 module.exports = 'precision mediump float;\nvarying vec4 color;\nvarying vec2 center;\nvarying vec2 resolution;\nvarying float radius;\nvoid main() {\n  vec4 color0 = vec4(0.0, 0.0, 0.0, 0.0);\n  float x = gl_FragCoord.x;\n  float y = resolution[1] - gl_FragCoord.y;\n  float dx = center[0] - x;\n  float dy = center[1] - y;\n  float distance = sqrt(dx*dx + dy*dy);\n  if ( distance < radius )\n    gl_FragColor = color;\n  else \n    gl_FragColor = color0;\n}\n';
 }, {}],
-15: [function(require, module, exports) {
+14: [function(require, module, exports) {
 ;(function () {
 
   var Renderer = function () {
@@ -987,7 +980,7 @@ module.exports = 'precision mediump float;\nvarying vec4 color;\nvarying vec2 ce
 })();
 
 }, {}],
-6: [function(require, module, exports) {
+5: [function(require, module, exports) {
 ;(function () {
 
   var Renderer = require('../renderer.js');
@@ -1042,8 +1035,8 @@ module.exports = 'precision mediump float;\nvarying vec4 color;\nvarying vec2 ce
   if (module && module.exports) module.exports = CanvasRenderer;
 })();
 
-}, {"../renderer.js":15,"../../helpers/color.js":7}],
-7: [function(require, module, exports) {
+}, {"../renderer.js":14,"../../helpers/color.js":6}],
+6: [function(require, module, exports) {
 // Ayasdi Inc. Copyright 2014
 // Color.js may be freely distributed under the Apache 2.0 license
 
@@ -1098,7 +1091,7 @@ function toRgb (intColor) {
   return 'rgb(' + r + ', ' + g + ', ' + b + ')';
 };
 }, {}],
-8: [function(require, module, exports) {
+7: [function(require, module, exports) {
 ;(function () {
   function Link () {
     this.x1 = 0;
@@ -1122,7 +1115,7 @@ function toRgb (intColor) {
 })();
 
 }, {}],
-9: [function(require, module, exports) {
+8: [function(require, module, exports) {
 ;(function () {
   function Node () {
     this.x = 0;
@@ -1144,7 +1137,7 @@ function toRgb (intColor) {
 })();
 
 }, {}],
-10: [function(require, module, exports) {
+9: [function(require, module, exports) {
 /**
  * Utilities
  * =========
@@ -1432,7 +1425,7 @@ function isNaN (o) {
   g.prototype.palette = function (name) {
     if (g.utils.isUndefined(name)) return this.props.palette;
 
-    this.props.palette = Grapher.getPalette(name);
+    this.props.palette = g.getPalette(name);
     this.update();
     return this;
   };

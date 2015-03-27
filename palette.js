@@ -10,7 +10,7 @@
   g.prototype.palette = function (name) {
     if (g.utils.isUndefined(name)) return this.props.palette;
 
-    this.props.palette = Grapher.getPalette(name);
+    this.props.palette = g.getPalette(name);
     this.update();
     return this;
   };

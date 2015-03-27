@@ -1,7 +1,7 @@
 var palette = [0x666666, 0x999999, 0xcccccc],
     paletteName = 'greyscale';
 
-describe('grapher', function () {
+describe('grapher with palette', function () {
   it('contains palettes', function () {
     expect(Grapher.palettes).toBeDefined();
   });
@@ -17,7 +17,7 @@ describe('grapher', function () {
   });
 });
 
-describe('a grapher instance', function () {
+describe('a grapher instance with palette', function () {
   var network, grapher;
   var index = 1;
 
@@ -34,6 +34,7 @@ describe('a grapher instance', function () {
       ]
     };
     grapher = new Grapher({});
+    grapher.data(network);
   });
 
   afterEach(function () {
@@ -47,7 +48,6 @@ describe('a grapher instance', function () {
   });
 
   it('gives node and links the proper palette color', function () {
-    grapher.data(network);
     grapher.palette(paletteName).render();
     var last = grapher.nodes[grapher.nodes.length - 1];
     expect(last.color).toBe(Grapher.getPalette(paletteName)[index]);

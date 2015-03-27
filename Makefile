@@ -1,6 +1,6 @@
-all: palette-min.js
+all: min.js
 
-palette-min.js:
+min.js:
 	@npm run palette-min.js
 
 test:
