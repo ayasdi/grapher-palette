@@ -1,5 +1,6 @@
 {
   "name": "grapher-palette",
+  "main": "palette.js",
   "repository": "ayasdi/grapher-palette",
   "description": "Palette module for Grapher",
   "version": "0.0.1",
